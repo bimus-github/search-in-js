@@ -1,0 +1,56 @@
+# Search Functions Package
+
+This package provides a set of versatile search functions to facilitate searching and filtering data based on different criteria. Whether you need to perform exact matches, fuzzy searches, or comparisons based on values, these functions offer flexibility and efficiency.
+
+## Available Search Functions
+
+- **Equal**: Returns true if the value is equal to the query value (e.g., `1 == 1`). This is the default behavior if no search function is specified.
+
+- **Fuzzy**: Returns true if the value fuzzy matches the query value, disregarding spaces (e.g., `1 == 1` or `1 == 11` or `"111" == "11 1"`).
+
+- **Contains**: Returns true if the value contains the query value (e.g., `1 contains 1` or `1 contains 11`).
+
+- **Starts-With**: Returns true if the value starts with the query value (e.g., `1 == 1` or `1234 === 12`).
+
+- **Ends-With**: Returns true if the value ends with the query value (e.g., `1 == 1` or `1234 == 34`).
+
+- **Starts-With-No-Space**: Returns true if the value starts with the query value, ignoring spaces (e.g., `1 == 1` or `"abd" == "ab"` or `"ab d" === "a bd"`).
+
+- **Greater**: Returns true if the value is greater than the query value (e.g., `1 > 0` or `a > b`).
+
+- **Less**: Returns true if the value is less than the query value (e.g., `1 < 2` or `a < b`).
+
+- **Greater-Equal**: Returns true if the value is greater than or equal to the query value (e.g., `1 >= 1` or `a >= a`).
+
+- **Less-Equal**: Returns true if the value is less than or equal to the query value (e.g., `1 <= 1` or `a <= a`).
+
+## Usage
+
+To use these search functions, import the `search` function and pass the necessary parameters:
+
+```typescript
+import search from "search-functions";
+
+interface Data {
+  id: number;
+  name: string;
+}
+
+const data: Data[] = [
+  { id: 1, name: "test1" },
+  { id: 12, name: "test2" },
+  { id: 123, name: "test3" },
+];
+
+const filteredDataEqual = data.filter((data) =>
+  search({ value: data.id, query: 1, searchFunction: "equal" })
+);
+console.log(filteredDataEqual); // [{ id: 1, name: "test1" }]
+
+const filteredDataFuzzy = data.filter((data) =>
+  search({ value: data.id, query: 1, searchFunction: "fuzzy" })
+);
+console.log(filteredDataFuzzy); // [{ id: 1, name: "test1" }, { id: 12, name: "test2" }, { id: 123, name: "test3" }]
+```
+
+Feel free to experiment with different search functions and parameters to suit your specific filtering needs.
