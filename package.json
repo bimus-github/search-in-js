@@ -1,11 +1,23 @@
 {
   "name": "search-in-js",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "rollup": "rollup -c"
   },
-  "keywords": [],
+  "keywords": [
+    "search",
+    "in",
+    "js",
+    "typescript",
+    "search-in-js",
+    "searchinjs",
+    "js-search",
+    "jssearch",
+    "fuzzy-search",
+    "fuzzysearch",
+    "fuzzy"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -25,5 +37,9 @@
   "types": "dist/index.d.ts",
   "publishConfig": {
     "@bimus-github:registry": "https://npm.pkg.github.com"
-  }
+  },
+  "repository": {
+    "url": "https://github.com/bimus-github/search-in-js"
+  },
+  "homepage": "https://github.com/bimus-github/search-in-js"
 }

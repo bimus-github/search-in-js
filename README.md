@@ -2,6 +2,16 @@
 
 This package provides a set of versatile search functions to facilitate searching and filtering data based on different criteria. Whether you need to perform exact matches, fuzzy searches, or comparisons based on values, these functions offer flexibility and efficiency.
 
+## Installation
+
+```bash
+npm i search-in-js
+```
+
+```bash
+yarn add search-in-js
+```
+
 ## Available Search Functions
 
 - **Equal**: Returns true if the value is equal to the query value (e.g., `1 == 1`). This is the default behavior if no search function is specified.
