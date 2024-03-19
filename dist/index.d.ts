@@ -22,30 +22,36 @@
  *
  */
 type SEARCH_FUNCTION = "fuzzy" | "equal" | "contains" | "starts-with" | "ends-with" | "starts-with-no-space" | "greater" | "less" | "greater-equal" | "less-equal";
-interface Props {
-    value: string | number;
-    query: string | number;
-    searchFunction: SEARCH_FUNCTION;
-}
+
 /**
- * Search function
- * @param {string | number} value - The value to search
- * @param {string | number} query - The query to search for in the value
+ * Hook to search data in an array based on a query using a search function.
+ * @template T The type of data in the array.
+ * @param {string} value The value to search for in the data.
+ * @param {T[]} data The array of data to search.
+ * @param {string[]} keys The array of keys to search for in the data.
+ * @examle
+ * const data: {id: number, name: string, comments: {id: number, text: string}}[] = [
+ *  {id: 1, name: "test1", comments: {id: 1, text: "comment1"}},
+ * ...
+ ]
+ 
+ if you want to search by id and name, you can use the following keys:
+ * const keys = ["id", "name"];
+
+ if you want to search by comments.id and comments.text, you can use the following keys:
+ * const keys = ["comments.id", "comments.text"];
+ * @param {SEARCH_FUNCTION} [functionType="fuzzy"] The type of search function to use.
  *
- * @returns {boolean} Returns true if the value matches the query
+ * @returns { [string, (newValue: string) => void, T[]]} The current value, setter of the search query and the filtered data.
  *
  * @example
- * const data: {id: number, name: string}[] = [
- *  {id: 1, name: "test1"},
- *  {id: 12, name: "test2"},
- *  {id: 123, name: "test3"}
- ]
- * const filterdedData = data.filter((data) => search({value: data.id, query: 1, searchFunction: "equal"}));
- * console.log(filterdedData); // [{id: 1, name: "test1"}]
+ * const [value, setValue] = useState("");
+ * const [filteredData, setFilteredData] = useState(data);
  *
- * const filterdedData = data.filter((data) => search({value: data.id, query: 1, searchFunction: "fuzzy"}));
- * console.log(filterdedData); // [{id: 1, name: "test1"}, {id: 12, name: "test2"}, {id: 123, name: "test3"}]
+ * useEffect(() => {
+ *  setFilteredData(filterData(value, data, keys));
+ * }, [value]);
  */
-declare function search(props: Props): boolean;
+declare function filterData<T>(value: string, data: T[], keys: string[], functionType?: SEARCH_FUNCTION): T[];
 
-export { type SEARCH_FUNCTION, search as default };
+export { filterData as default };
