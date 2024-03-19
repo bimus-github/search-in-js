@@ -65,6 +65,13 @@ const ExampleComponent = () => {
 - `value` (`string`): The value to search for in the data.
 - `data` (`Array<T>`): The array of data to search.
 - `keys` (`Array<string>`): The array of keys to search for in the data.
+
+  if you want to search by id and name, you can use the following keys:
+  const keys = ["id", "name"];
+
+  if you want to search by comments.id and comments.text, you can use the following keys:
+  const keys = ["comments.id", "comments.text"];
+
 - `functionType` (`SEARCH_FUNCTION`, optional): The type of search function to use. Defaults to "fuzzy".
 
 Returns: `Array<T>` - The filtered data based on the search query.

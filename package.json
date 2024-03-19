@@ -1,6 +1,6 @@
 {
   "name": "search-in-js",
-  "version": "1.2.0",
+  "version": "1.2.5",
   "description": "",
   "scripts": {
     "rollup": "rollup -c",
