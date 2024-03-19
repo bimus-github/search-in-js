@@ -1,9 +1,10 @@
 {
   "name": "search-in-js",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "",
   "scripts": {
-    "rollup": "rollup -c"
+    "rollup": "rollup -c",
+    "start": "tsc src/index.ts --watch"
   },
   "keywords": [
     "search",
