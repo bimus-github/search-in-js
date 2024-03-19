@@ -1,6 +1,6 @@
 # Array Data Filter Hook
 
-This is a custom hook designed to filter data in an array based on a search query.
+This is a custom function designed to filter data in an array based on a search query.
 It provides flexibility in specifying the keys to search for within the data,
 as well as the type of search function to use.
 
