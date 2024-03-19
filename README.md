@@ -1,66 +1,83 @@
-# Search Functions Package
+# Array Data Filter Hook
 
-This package provides a set of versatile search functions to facilitate searching and filtering data based on different criteria. Whether you need to perform exact matches, fuzzy searches, or comparisons based on values, these functions offer flexibility and efficiency.
+This is a custom hook designed to filter data in an array based on a search query.
+It provides flexibility in specifying the keys to search for within the data,
+as well as the type of search function to use.
 
-## Installation
+## Usage
+
+### Installation
 
 ```bash
-npm i search-in-js
+npm install search-in-js
 ```
 
 ```bash
 yarn add search-in-js
 ```
 
-## Available Search Functions
+### Example
 
-- **Equal**: Returns true if the value is equal to the query value (e.g., `1 == 1`). This is the default behavior if no search function is specified.
+```javascript
+import { useState, useEffect } from "react";
+import filterData from "search-in-js";
 
-- **Fuzzy**: Returns true if the value fuzzy matches the query value, disregarding spaces (e.g., `1 == 1` or `1 == 11` or `"111" == "11 1"`).
+const ExampleComponent = () => {
+  const data = [
+    { id: 1, name: "test1", comments: { id: 1, text: "comment1" } },
+    { id: 2, name: "test2", comments: { id: 2, text: "comment2" } },
+    // More data...
+  ];
 
-- **Contains**: Returns true if the value contains the query value (e.g., `1 contains 1` or `1 contains 11`).
+  // Define keys for searching
+  const keys = ["id", "name"];
 
-- **Starts-With**: Returns true if the value starts with the query value (e.g., `1 == 1` or `1234 === 12`).
+  // State for search query and filtered data
+  const [value, setValue] = useState("");
+  const [filteredData, setFilteredData] = useState(data);
 
-- **Ends-With**: Returns true if the value ends with the query value (e.g., `1 == 1` or `1234 == 34`).
+  // Update filtered data when search query changes
+  useEffect(() => {
+    setFilteredData(filterData(value, data, keys));
+  }, [value]);
 
-- **Starts-With-No-Space**: Returns true if the value starts with the query value, ignoring spaces (e.g., `1 == 1` or `"abd" == "ab"` or `"ab d" === "a bd"`).
-
-- **Greater**: Returns true if the value is greater than the query value (e.g., `1 > 0` or `a > b`).
-
-- **Less**: Returns true if the value is less than the query value (e.g., `1 < 2` or `a < b`).
-
-- **Greater-Equal**: Returns true if the value is greater than or equal to the query value (e.g., `1 >= 1` or `a >= a`).
-
-- **Less-Equal**: Returns true if the value is less than or equal to the query value (e.g., `1 <= 1` or `a <= a`).
-
-## Usage
-
-To use these search functions, import the `search` function and pass the necessary parameters:
-
-```typescript
-import search from "search-functions";
-
-interface Data {
-  id: number;
-  name: string;
-}
-
-const data: Data[] = [
-  { id: 1, name: "test1" },
-  { id: 12, name: "test2" },
-  { id: 123, name: "test3" },
-];
-
-const filteredDataEqual = data.filter((data) =>
-  search({ value: data.id, query: 1, searchFunction: "equal" })
-);
-console.log(filteredDataEqual); // [{ id: 1, name: "test1" }]
-
-const filteredDataFuzzy = data.filter((data) =>
-  search({ value: data.id, query: 1, searchFunction: "fuzzy" })
-);
-console.log(filteredDataFuzzy); // [{ id: 1, name: "test1" }, { id: 12, name: "test2" }, { id: 123, name: "test3" }]
+  return (
+    <div>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <ul>
+        {filteredData.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 ```
 
-Feel free to experiment with different search functions and parameters to suit your specific filtering needs.
+### API
+
+#### `filterData(value, data, keys, functionType)`
+
+- `value` (`string`): The value to search for in the data.
+- `data` (`Array<T>`): The array of data to search.
+- `keys` (`Array<string>`): The array of keys to search for in the data.
+- `functionType` (`SEARCH_FUNCTION`, optional): The type of search function to use. Defaults to "fuzzy".
+
+Returns: `Array<T>` - The filtered data based on the search query.
+
+## Contributing
+
+Contributions are welcome! Please feel free to open a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+
+Feel free to modify and expand upon it to suit your needs!
+```
