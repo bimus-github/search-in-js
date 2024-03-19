@@ -24,13 +24,13 @@ import filterData from "search-in-js";
 
 const ExampleComponent = () => {
   const data = [
-    { id: 1, name: "test1", comments: { id: 1, text: "comment1" } },
-    { id: 2, name: "test2", comments: { id: 2, text: "comment2" } },
+    { id: 1, name: "test1", comment: { id: 1, text: "some comment" } },
+    { id: 2, name: "test2", comment: { id: 2, text: "some other comment" } },
     // More data...
   ];
 
   // Define keys for searching
-  const keys = ["id", "name"];
+  const keys = ["id", "comment.text"];
 
   // State for search query and filtered data
   const [value, setValue] = useState("");
