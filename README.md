@@ -1,4 +1,4 @@
-# Array Data Filter Hook
+# Array Data Filter Function
 
 This is a custom function designed to filter data in an array based on a search query.
 It provides flexibility in specifying the keys to search for within the data,
@@ -20,7 +20,7 @@ yarn add search-in-js
 
 ```javascript
 import { useState, useEffect } from "react";
-import filterData from "search-in-js";
+import search from "search-in-js";
 
 const ExampleComponent = () => {
   const data = [
@@ -38,7 +38,7 @@ const ExampleComponent = () => {
 
   // Update filtered data when search query changes
   useEffect(() => {
-    setFilteredData(filterData(value, data, keys));
+    setFilteredData(search(value, data, keys, "fuzzy"));
   }, [value]);
 
   return (
@@ -60,7 +60,7 @@ const ExampleComponent = () => {
 
 ### API
 
-#### `filterData(value, data, keys, functionType)`
+#### `search(value, data, keys, functionType)`
 
 - `value` (`string`): The value to search for in the data.
 - `data` (`Array<T>`): The array of data to search.
@@ -73,6 +73,9 @@ const ExampleComponent = () => {
   const keys = ["comments.id", "comments.text"];
 
 - `functionType` (`SEARCH_FUNCTION`, optional): The type of search function to use. Defaults to "fuzzy".
+
+  Available search function types:
+  equal, fuzzy, contains, starts-with, ends-with, starts-with-no-space, greater, less, greater-equal, less-equal
 
 Returns: `Array<T>` - The filtered data based on the search query.
 
