@@ -44,14 +44,17 @@ function search(props) {
     }
 }
 function fuzzySearch(search, text) {
+    // Remove all spaces from the search term and the text
+    const searchNoSpaces = search.replace(/\s+/g, "");
+    const textNoSpaces = text.replace(/\s+/g, "");
     // Escape special characters in the search term
-    const escapedSearch = search.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    const escapedSearch = searchNoSpaces.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
     // Create a fuzzy regex pattern
     const fuzzyPattern = escapedSearch.split("").join(".*?");
     // Create a regex object with the fuzzy pattern
     const regex = new RegExp(fuzzyPattern, "i");
     // Test the regex against the text
-    return regex.test(text);
+    return regex.test(textNoSpaces);
 }
 function containsPattern(search, text) {
     // Remove all spaces from the search term and the text

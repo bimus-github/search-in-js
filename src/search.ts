@@ -88,8 +88,15 @@ export function search(props: Props): boolean {
 }
 
 export function fuzzySearch(search: string, text: string) {
+  // Remove all spaces from the search term and the text
+  const searchNoSpaces = search.replace(/\s+/g, "");
+  const textNoSpaces = text.replace(/\s+/g, "");
+
   // Escape special characters in the search term
-  const escapedSearch = search.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+  const escapedSearch = searchNoSpaces.replace(
+    /[-\/\\^$*+?.()|[\]{}]/g,
+    "\\$&"
+  );
 
   // Create a fuzzy regex pattern
   const fuzzyPattern = escapedSearch.split("").join(".*?");
@@ -98,7 +105,7 @@ export function fuzzySearch(search: string, text: string) {
   const regex = new RegExp(fuzzyPattern, "i");
 
   // Test the regex against the text
-  return regex.test(text);
+  return regex.test(textNoSpaces);
 }
 
 export function containsPattern(search: string, text: string) {
