@@ -47,4 +47,8 @@ interface Props {
  * console.log(filterdedData); // [{id: 1, name: "test1"}, {id: 12, name: "test2"}, {id: 123, name: "test3"}]
  */
 export declare function search(props: Props): boolean;
+export declare function fuzzySearch(search: string, text: string): boolean;
+export declare function containsPattern(search: string, text: string): boolean;
+export declare function endsWithPattern(search: string, text: string): boolean;
+export declare function startsWithPattern(search: string, text: string): boolean;
 export {};

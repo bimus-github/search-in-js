@@ -23,25 +23,16 @@ function search(props) {
     const { value, query, searchFunction } = props;
     switch (searchFunction) {
         case "fuzzy": {
-            return value
-                .toString()
-                .replaceAll(" ", "")
-                .includes(query.toString().replaceAll(" ", ""));
+            return fuzzySearch(value.toString(), query.toString());
         }
         case "equal":
-            return value.toString() === query.toString();
+            return value.toString().toLowerCase() === query.toString().toLowerCase();
         case "contains":
-            return value.toString().includes(query.toString());
+            return containsPattern(value.toString(), query.toString());
         case "ends-with":
-            return value.toString().startsWith(query.toString());
+            return endsWithPattern(value.toString(), query.toString());
         case "starts-with":
-            return value.toString().endsWith(query.toString());
-        case "starts-with-no-space":
-            return value
-                .toString()
-                .toLowerCase()
-                .replaceAll(" ", "")
-                .startsWith(query.toString().toLowerCase().replaceAll(" ", ""));
+            return startsWithPattern(value.toString(), query.toString());
         case "greater":
             return value > query;
         case "less":
@@ -53,6 +44,49 @@ function search(props) {
         default:
             return value === query;
     }
+}
+function fuzzySearch(search, text) {
+    // Escape special characters in the search term
+    const escapedSearch = search.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    // Create a fuzzy regex pattern
+    const fuzzyPattern = escapedSearch.split("").join(".*?");
+    // Create a regex object with the fuzzy pattern
+    const regex = new RegExp(fuzzyPattern, "i");
+    // Test the regex against the text
+    return regex.test(text);
+}
+function containsPattern(search, text) {
+    // Remove all spaces from the search term and the text
+    const searchNoSpaces = search.replace(/\s+/g, "");
+    const textNoSpaces = text.replace(/\s+/g, "");
+    // Escape special characters in the search term
+    const escapedSearch = searchNoSpaces.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    // Create a regex object with the escaped search term
+    const regex = new RegExp(escapedSearch, "i");
+    // Test the regex against the text
+    return regex.test(textNoSpaces);
+}
+function endsWithPattern(search, text) {
+    // Remove all spaces from the search term and the text
+    const searchNoSpaces = search.replace(/\s+/g, "");
+    const textNoSpaces = text.replace(/\s+/g, "");
+    // Escape special characters in the search term
+    const escapedSearch = searchNoSpaces.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    // Create a regex object with the escaped search term anchored to the end
+    const regex = new RegExp(escapedSearch + "$", "i");
+    // Test the regex against the text
+    return regex.test(textNoSpaces);
+}
+function startsWithPattern(search, text) {
+    // Remove all spaces from the search term and the text
+    const searchNoSpaces = search.replace(/\s+/g, "");
+    const textNoSpaces = text.replace(/\s+/g, "");
+    // Escape special characters in the search term
+    const escapedSearch = searchNoSpaces.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    // Create a regex object with the escaped search term anchored to the start
+    const regex = new RegExp("^" + escapedSearch, "i");
+    // Test the regex against the text
+    return regex.test(textNoSpaces);
 }
 
 /**
